@@ -1,22 +1,24 @@
 # CYBR 165 – Survey of Cybersecurity
 
-This class introduces the major areas of cybersecurity and gives a broad view of the field.  
-It’s a mix of concepts, terminology, basic tools, and real-world cases.
+This folder holds my notes and research on the broad landscape of the cybersecurity field. 
+The goal of this class is to understand the different domains of security and how they protect global infrastructure.
 
 ## What I’ll Focus On
-- Core cybersecurity concepts and terminology  
-- Security principles: confidentiality, integrity, availability  
-- Basic threat types and common attacks  
-- Defensive strategies and best practices  
-- How cybersecurity fits into modern organizations  
+- **The CIA Triad** – Confidentiality, Integrity, and Availability.
+- **Threat Actors** – Identifying who attacks networks and why.
+- **Legal & Ethical Frameworks** – Understanding the laws governing digital forensics and privacy.
+- **Security Domains** – Exploring Network, Cloud, and Application security.
 
-## Folder Layout
-- **notes/** – summaries of each topic and chapter  
-- **labs/** – hands-on practice and walkthroughs  
-- **assignments/** – reflections, short essays, and homework  
-- **brainstorms/** – ideas for projects, tools, and topics I want to explore  
+## How I’ll Use This Folder
+- **notes/** – Lecture summaries and textbook readings.
+- **assignments/** – Research papers and case studies.
+- **labs/** – Initial hands-on security exercises.
+- **brainstorms/** – Ideas for projects and future specialization.
 
 ## Goals for the Semester
-- Build a strong foundation before advanced cyber courses  
-- Understand the “big picture” of the field  
-- Discover which areas of cybersecurity I want to specialize in  
+- Identify which cybersecurity domain I want to specialize in.
+- Build a solid vocabulary of security terminology.
+- Stay updated on current global cyber threats through daily news tracking.
+
+---
+*Last Updated: January 2026*

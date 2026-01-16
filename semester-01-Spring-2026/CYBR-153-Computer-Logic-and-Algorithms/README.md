@@ -1,22 +1,25 @@
 # CYBR 153 – Computer Logic and Algorithms
 
-This class covers the basics of logic, problem-solving, and algorithm design.  
-It sets the foundation for programming, cybersecurity, and technical thinking.
+This folder contains my logic proofs, algorithm designs, and coding exercises.
+The goal of this course is to master the mathematical logic that drives software and security protocols.
 
 ## What I’ll Focus On
-- Logical operators and truth tables  
-- Step-by-step problem solving  
-- Algorithm flow and structure  
-- Translating logic into simple code  
-- Building confidence for future programming courses  
+- **Boolean Logic** – AND, OR, NOT, and XOR gates.
+- **Algorithm Efficiency** – Understanding Big O notation and performance.
+- **Data Structures** – How computers organize data (Arrays, Lists, Trees).
+- **Flow Control** – Mastering loops, conditionals, and recursion.
 
-## Folder Layout
-- **notes/** – cleaned-up explanations of lectures and examples  
-- **code/** – small scripts and practice exercises  
-- **labs/** – step-by-step lab work  
-- **assignments/** – homework and problem sets  
+## How I’ll Use This Folder
+- **notes/** – Logical proofs and algorithm walkthroughs.
+- **code/** – Python or C++ scripts demonstrating specific algorithms.
+- **labs/** – Problem-solving sets and logic puzzles.
+- **assignments/** – Formal algorithm analysis and reflections.
 
-## Goals for the Semester
-- Get comfortable with logic-based thinking  
-- Build strong habits before CYBR 181 (Programming Fundamentals)  
-- Keep all examples and notes organized so I can reuse them later  
+### Logic Flow Example
+```mermaid
+graph LR
+    A[Input] --> B{Logical Condition}
+    B -- True --> C[Action A]
+    B -- False --> D[Action B]
+    C --> E[End]
+    D --> E[End]

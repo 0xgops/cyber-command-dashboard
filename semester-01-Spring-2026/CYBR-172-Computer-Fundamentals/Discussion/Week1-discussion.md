@@ -1,0 +1,4 @@
+Hello everyone! My name is Greg Lawson, and I am a Cybersecurity major here at SUNY Canton. I am originally from Jamaica, where I studied Structural Engineering and Physics. In my free time, I’m into longboarding—specifically skating hills and parking garages.
+
+
+My interest in this course is driven by my professional background. From 2017 to 2022, I worked as a remote IT Support Specialist for Marriott International, where I directed system setups for new home agents and managed the deployment of VoIP devices, VPN configurations, and network setups. I served as the first level of contact, strictly documenting every interaction in multiple tracking systems and escalating issues as necessary. While I have years of experience in enterprise troubleshooting and security compliance, I’m here to earn the formal credentials that match my background and to stay current in the cybersecurity field. I look forward to connecting with you all!

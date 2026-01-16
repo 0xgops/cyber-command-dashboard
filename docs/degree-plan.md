@@ -8,9 +8,8 @@ I’ll update this every semester as I move through the program.
 ## Completed & In Progress
 I currently have a mix of transfer credits and courses in progress. My first official SUNY Canton semester is Spring 2026.
 
-**Spring 2026 Courses**
-- American Economic History  
-- ECON 105  
+**Spring 2026 Courses** 
+- ECON 105 - American Economic History 
 - CYBR 153 – Computer Logic and Algorithms  
 - CYBR 165 – Survey of Cybersecurity  
 - SOCI 101 – Intro to Sociology  
