@@ -1,0 +1,7 @@
+I honestly couldn’t imagine life here in Manhattan without embedded computers and IoT, mostly because of how deep they’ve gotten into our transit system. I use them every single day just to stay sane while commuting, whether it’s checking Google Maps to see if the bus is coming, or finding the nearest e-bike before I even step out of my apartment. 
+
+Being a huge fan of the wizarding world, I kind of see this tech as the closest thing we’ll ever get to real “magic.” We’re finally moving past just monitoring things to actually interacting with them in real-time. Look at the end of the MetroCard era; switching to OMNY means our phones (which are really just a bunch of embedded computers anyway) are constantly talking to city infrastructure to make travel faster. 
+
+But as a cybersecurity student, I know this “magic” has a dark side. Every new IoT device we add to the MTA is basically a new door for a hacker to walk through.  
+
+If someone managed to pull off a DDoS attack on the MTA’s network, it wouldn’t just be a tech issue, it would be total chaos for millions of travelers. There’s also a privacy angle to think about. If sensors are tracking exactly where everyone is getting on and off, that data is a goldmine for third-party breaches or even surveillance we didn't sign up for.  
