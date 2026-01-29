@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canton Cyber Command</title>
+    <style>
+        :root { --bg: #0a0a0a; --panel: #161616; --accent: #007acc; --text: #e0e0e0; --success: #28a745; --cyber-green: #00ff00; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--text); margin: 0; display: flex; flex-direction: column; height: 100vh; }
+        h1 { padding: 20px; margin: 0; background: var(--panel); border-bottom: 1px solid #333; font-size: 1.5rem; letter-spacing: 1px; }
+        
+        .container { display: flex; flex: 1; overflow: hidden; padding: 20px; gap: 20px; }
+        .sidebar { width: 350px; display: flex; flex-direction: column; gap: 15px; overflow-y: auto; }
+        .main-view { flex: 1; display: flex; flex-direction: column; background: var(--panel); border-radius: 8px; border: 1px solid #333; overflow: hidden; }
+
+        .nav-section { padding: 12px; background: var(--panel); border-radius: 8px; border: 1px solid #333; }
+        small { color: #888; font-weight: bold; text-transform: uppercase; font-size: 0.7rem; }
+        
+        .tab-container { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+        .tab { padding: 6px 12px; cursor: pointer; background: #252525; border-radius: 4px; border: 1px solid #444; font-size: 0.9rem; transition: 0.2s; }
+        .tab:hover { background: #333; border-color: var(--accent); }
+        .active-tab { background: var(--accent) !important; border-color: var(--accent); color: white; }
+
+        .explorer-header { padding: 15px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
+        #file-list { flex: 1; overflow-y: auto; padding: 10px; }
+        .file-item { padding: 8px 12px; border-radius: 4px; font-family: 'Consolas', monospace; cursor: pointer; color: #4da3ff; font-size: 0.9rem; transition: 0.1s; display: flex; justify-content: space-between; }
+        .file-item:hover { background: #2a2a2a; color: #fff; }
+
+        .editor-header { padding: 10px 20px; background: #222; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
+        textarea { flex: 1; background: #050505; color: var(--cyber-green); font-family: 'Fira Code', 'Courier New', monospace; padding: 20px; border: none; outline: none; resize: none; font-size: 1rem; }
+        
+        .btn { padding: 8px 14px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-weight: bold; transition: 0.2s; }
+        .add-btn { background: var(--success); color: white; }
+        .add-btn:hover { background: #218838; }
+        .save-btn { background: var(--accent); color: white; width: 100px; }
+
+        .project-card { margin-top: auto; padding: 15px; background: #1a1a1a; border-left: 4px solid #004812; border-radius: 4px; }
+        .tag { background: #004812; color: #fff; padding: 2px 8px; font-size: 0.65rem; border-radius: 3px; margin-right: 5px; }
+    </style>
+</head>
+<body>
+
+    <h1>CANTON CYBER COMMAND</h1>
+
+    <div class="container">
+        <div class="sidebar">
+            <div class="nav-section">
+                <small>Select Year</small>
+                <div class="tab-container" id="year-tabs">
+                    {% for year in hierarchy.keys() %}
+                        <div class="tab" onclick="selectYear('{{ year }}', this)">{{ year }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="nav-section" id="semester-section" style="display:none;">
+                <small>Semester</small>
+                <div class="tab-container" id="semester-tabs"></div>
+            </div>
+
+            <div class="nav-section" id="course-section" style="display:none;">
+                <small>Course</small>
+                <div class="tab-container" id="course-tabs"></div>
+            </div>
+
+            <div class="project-card">
+                <small>System Status: Layer 1 Active</small>
+                <p style="margin: 5px 0; font-size: 0.9rem;">Lead Infrastructure Technician</p>
+                <span class="tag">NIST 800-53</span><span class="tag">PHYSICAL SEC</span>
+            </div>
+        </div>
+
+        <div class="main-view">
+            <div class="explorer-header">
+                <h3 style="margin:0; font-size: 1rem;">File Explorer</h3>
+                <button class="btn add-btn" onclick="createNewFile()">+ New File</button>
+            </div>
+            
+            <div id="file-list">Select course to initialize...</div>
+            
+            <div id="editor-container" style="display:none; flex-direction: column; flex: 1; border-top: 2px solid #333;">
+                <div class="editor-header">
+                    <span id="edit-title" style="font-family: monospace; font-size: 0.8rem; color: #888;"></span>
+                    <button class="btn save-btn" onclick="saveFile()">SAVE</button>
+                </div>
+                <textarea id="editor" spellcheck="false"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let hierarchy = {{ hierarchy|tojson }};
+        let selection = { year: null, semester: null, course: null };
+        let currentFilePath = "";
+
+        function selectYear(year, el) {
+            selection = { year: year, semester: null, course: null };
+            updateActive(el, '#year-tabs');
+            const semContainer = document.getElementById('semester-tabs');
+            semContainer.innerHTML = '';
+            Object.keys(hierarchy[year]).forEach(sem => {
+                semContainer.innerHTML += `<div class="tab" onclick="selectSemester('${sem}', this)">${sem}</div>`;
+            });
+            document.getElementById('semester-section').style.display = 'block';
+            document.getElementById('course-section').style.display = 'none';
+            resetEditor();
+        }
+
+        function selectSemester(sem, el) {
+            selection.semester = sem;
+            updateActive(el, '#semester-tabs');
+            const courseContainer = document.getElementById('course-tabs');
+            courseContainer.innerHTML = '';
+            hierarchy[selection.year][sem].forEach(course => {
+                courseContainer.innerHTML += `<div class="tab" onclick="selectCourse('${course}', this)">${course}</div>`;
+            });
+            document.getElementById('course-section').style.display = 'block';
+        }
+
+        async function selectCourse(course, el) {
+            selection.course = course;
+            updateActive(el, '#course-tabs');
+            // Logic: matches your semester-01-spring-2026 folder naming convention
+            const fullPath = `semester-01-${selection.semester}-${selection.year}/${course}`;
+            
+            const res = await fetch(`/get_files/${encodeURIComponent(fullPath)}`);
+            const files = await res.json();
+            const list = document.getElementById('file-list');
+            
+            list.innerHTML = '';
+            if (files.error) {
+                list.innerText = "Directory not found.";
+                return;
+            }
+            
+            files.forEach(f => {
+                const item = document.createElement('div');
+                item.className = 'file-item';
+                item.innerHTML = `<span>${f}</span><small style="color:#555">OPEN</small>`;
+                item.onclick = () => openFile(`${fullPath}/${f}`);
+                list.appendChild(item);
+            });
+        }
+
+        async function openFile(path) {
+            currentFilePath = path;
+            const res = await fetch(`/read_file/${encodeURIComponent(path)}`);
+            const data = await res.json();
+            
+            document.getElementById('editor-container').style.display = 'flex';
+            document.getElementById('edit-title').innerText = "PATH: ~/" + path;
+            document.getElementById('editor').value = data.content || "";
+        }
+
+        async function saveFile() {
+            const content = document.getElementById('editor').value;
+            const res = await fetch('/save_file', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ filepath: currentFilePath, content: content })
+            });
+            const result = await res.json();
+            if(result.message) {
+                const originalTitle = document.getElementById('edit-title').innerText;
+                document.getElementById('edit-title').innerText = "SAVED SUCCESSFULLY";
+                setTimeout(() => { document.getElementById('edit-title').innerText = originalTitle; }, 2000);
+            }
+        }
+
+        async function createNewFile() {
+    if (!selection.course) { alert("Select a course first!"); return; }
+    
+    // 1. Ask for the subfolder first
+    const subfolder = prompt("Target subfolder? (assignments, notes, labs, or Discussion)", "assignments");
+    if (!subfolder) return;
+
+    // 2. Ask for the filename
+    const filename = prompt("Enter filename (e.g. LawsonG_Assignment1_CYBR165.txt):");
+    if (!filename) return;
+
+    // 3. Construct the path: semester-01-spring-2026/CYBR165/assignments/filename
+    const relativePath = `semester-01-${selection.semester}-${selection.year}/${selection.course}/${subfolder}/${filename}`;
+    
+    const res = await fetch('/create_file', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ filepath: relativePath })
+    });
+    const result = await res.json();
+    
+    if (result.status === "success") {
+        alert(result.message);
+        // Refresh the list to show the new file
+        selectCourse(selection.course, document.querySelector('#course-tabs .active-tab'));
+    } else {
+        alert("Error: " + result.message);
+    }
+}
+
+
+        function updateActive(el, containerId) {
+            document.querySelectorAll(`${containerId} .tab`).forEach(t => t.classList.remove('active-tab'));
+            el.classList.add('active-tab');
+        }
+
+        function resetEditor() {
+            document.getElementById('editor-container').style.display = 'none';
+            document.getElementById('file-list').innerText = 'Select course items...';
+        }
+    </script>
+</body>
+</html>
